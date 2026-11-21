@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* Tema Food Store: paleta cálida (naranja / rosa) sobre fondo crema    */
+/* ------------------------------------------------------------------ */
+@theme {
+  --color-brand-50: #fff7ed;
+  --color-brand-100: #ffedd5;
+  --color-brand-200: #fed7aa;
+  --color-brand-300: #fdba74;
+  --color-brand-400: #fb923c;
+  --color-brand-500: #f97316;
+  --color-brand-600: #ea580c;
+  --color-brand-700: #c2410c;
+  --color-brand-800: #9a3412;
+  --color-brand-900: #7c2d12;
+  --color-ink: #1e1b2e;
+
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-pop: pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-float: float 4s ease-in-out infinite;
+  --animate-slide-in: slide-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-modal: modal-in 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(8deg); }
+  }
+  @keyframes slide-in {
+    from { opacity: 0; transform: translateX(110%); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes modal-in {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+}
+
+:root {
+  font-family: "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(1200px 500px at 100% -10%, rgb(253 186 116 / 0.28), transparent 60%),
+    radial-gradient(900px 420px at -10% 8%, rgb(244 114 182 / 0.16), transparent 60%),
+    #fffaf5;
+  color: var(--color-ink);
+}
+
+/* En la capa base para que las utilidades de Tailwind (text-sm, etc.) puedan pisarla */
+@layer base {
+  button, input, select, textarea { font: inherit; }
+}
+
+::selection { background: #fed7aa; }
+
+.shimmer {
+  background: linear-gradient(90deg, #f6ece3 0%, #fdf6f0 40%, #f6ece3 80%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+@keyframes shimmer {
+  from { background-position: -400px 0; }
+  to { background-position: 400px 0; }
+}
+
+@layer components {
+  /* Tablas del panel de administración (TanStack Table) */
+  .fs-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+  .fs-table thead tr { background: linear-gradient(90deg, #1e1b2e, #46264a); }
+  .fs-table thead th {
+    background: transparent;
+    color: #fff;
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .fs-table tbody tr { transition: background-color 0.15s ease; }
+  .fs-table tbody tr:nth-child(even) { background: #fffaf5; }
+  .fs-table tbody tr:hover { background: #fff1e6; }
+  .fs-table tbody td { border-top: 1px solid #f3e8de; }
+
+  .fs-select {
+    border-radius: 0.8rem;
+    border: 1px solid #ead9ca;
+    background: #fff;
+    padding: 0.6rem 0.9rem;
+    outline: none;
+    transition: box-shadow 0.15s, border-color 0.15s;
+  }
+  .fs-select:focus { border-color: var(--color-brand-400); box-shadow: 0 0 0 4px rgb(249 115 22 / 0.15); }
+
+  .fs-panel {
+    border-radius: 1.25rem;
+    border: 1px solid #f3e8de;
+    background: #fff;
+    box-shadow: 0 14px 34px -22px rgb(124 45 18 / 0.45);
+  }
+
+  .text-gradient {
+    background: linear-gradient(90deg, #ea580c, #e11d48, #9333ea);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
