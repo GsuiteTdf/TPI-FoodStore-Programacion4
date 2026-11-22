@@ -20,7 +20,7 @@ Aplicación web para un negocio de comidas: los clientes se registran, recorren 
 ## Requisitos
 
 - **Python 3.11, 3.12 o 3.13**
-- **PostgreSQL 15+**, o **Docker Desktop** para levantarlo con un comando (para desarrollo también se acepta SQLite, ver más abajo)
+- **PostgreSQL 15+** (para desarrollo también se acepta SQLite, ver más abajo)
 - **Node.js 20.19+** y **pnpm 9+** (`npm install -g pnpm`)
 
 ## Estructura
@@ -40,7 +40,6 @@ Aplicación web para un negocio de comidas: los clientes se registran, recorren 
 │   ├── src/routes/       AppRouter y ProtectedRoute
 │   ├── public/img/       imágenes de los productos
 │   └── .env.example
-├── docker-compose.yml    PostgreSQL listo para usar (opcional)
 └── README.md
 ```
 
@@ -80,23 +79,11 @@ cp .env.example .env
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | Expiración del token y de la cookie  | `30`                                                         |
 | `FRONTEND_ORIGIN`             | Origen permitido por CORS            | `http://localhost:5173`                                      |
 
-**Base de datos PostgreSQL** (elegir una opción):
+**Base de datos PostgreSQL:** crear la base y ajustar usuario/contraseña en `DATABASE_URL`:
 
-- Con Docker (no requiere instalar PostgreSQL). Desde la raíz del proyecto:
-
-  ```bash
-  docker compose up -d db
-  ```
-
-  Crea `foodstore_db` con usuario `postgres` / `postgres` en `localhost:5432`, que coincide con `.env.example`.
-
-  > Si ya tenés PostgreSQL instalado escuchando en el puerto 5432, el contenedor no puede usarlo. Creá un archivo `.env` en la raíz con `DB_HOST_PORT=5433`, volvé a ejecutar `docker compose up -d db` y en `backend/.env` usá `DATABASE_URL=postgresql://postgres:postgres@localhost:5433/foodstore_db`.
-
-- Con PostgreSQL instalado localmente: crear la base y ajustar usuario/contraseña en `DATABASE_URL`:
-
-  ```bash
-  psql -U postgres -c "CREATE DATABASE foodstore_db;"
-  ```
+```bash
+psql -U postgres -c "CREATE DATABASE foodstore_db;"
+```
 
 **Alternativa SQLite (sin instalar PostgreSQL):** en `.env` usar `DATABASE_URL=sqlite:///./foodstore.db`.
 
@@ -108,11 +95,12 @@ python -m app.db.seed
 
 Crea las tablas y carga los datos iniciales (es idempotente: se puede correr varias veces):
 
-| Usuario | Contraseña   | Rol   |
-| ------- | ------------ | ----- |
-| `admin` | `Admin1234!` | admin |
+| Usuario                        | Contraseña                      | Rol   | Cómo se obtiene                         |
+| ------------------------------ | ------------------------------- | ----- | --------------------------------------- |
+| `admin`                        | `Admin1234!`                    | admin | Lo crea el seed                         |
+| El que elijas al registrarte   | La que elijas (mínimo 8 caract.) | user  | Pantalla **Registrarse** del frontend   |
 
-Además, 3 categorías (Pizzas, Hamburguesas y Bebidas) y 8 productos con stock e imagen. Los clientes se crean desde la pantalla de registro.
+El inicio de sesión se hace con el **nombre de usuario** (no con el email). Además, el seed carga 3 categorías (Pizzas, Hamburguesas y Bebidas) y 8 productos con stock e imagen.
 
 ### 4. Ejecución
 
