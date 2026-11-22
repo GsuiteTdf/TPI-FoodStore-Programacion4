@@ -1,0 +1,27 @@
+# PostgreSQL para desarrollo local (opcional).
+#   docker compose up -d db     -> base foodstore_db en localhost:5432 (postgres / postgres)
+#   docker compose down         -> la detiene (los datos se conservan)
+#   docker compose down -v      -> la detiene y borra los datos
+# Si el puerto 5432 está ocupado, crear un .env en la raíz con DB_HOST_PORT=5433.
+name: foodstore
+
+services:
+  db:
+    image: postgres:16
+    container_name: foodstore_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: foodstore_db
+    ports:
+      - "${DB_HOST_PORT:-5432}:5432"
+    volumes:
+      - foodstore_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d foodstore_db"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  foodstore_data:
