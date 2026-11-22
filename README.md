@@ -6,6 +6,7 @@ Aplicación web completa para un negocio de comidas, desarrollada con FastAPI + 
 
 - Repositorio público de GitHub: https://github.com/GsuiteTdf/TPI-FoodStore-Programacion4
 - Video público de demostración (10 a 15 minutos): https://drive.google.com/file/d/1gqhW-hKeACAt6ENgzLzvurhS6TOAPVGs/view?usp=sharing
+- Youtube link (puede que lo borren por introducir email ficticio (doxing): https://youtu.be/DLYFevjmmDA
 
 > Antes de entregar en Moodle, reemplazar obligatoriamente los dos valores anteriores por las URLs públicas definitivas.
 
